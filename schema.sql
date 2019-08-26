@@ -9,3 +9,4 @@ CREATE TABLE quotes
 	quote TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
+

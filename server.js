@@ -29,6 +29,19 @@ connection.connect(function(err){
     console.log("the connection id is: "+connection.threadId);
 });
 
+//ROUTES
+app.get("/", function(req, res){
+    connection.query("SELECT * FROM quotes;", function(err, result){
+        if(err){
+            return res.status(500).end();
+        }
+
+        res.render("index", {quotes: result});
+    });
+});
+
+
+
 app.listen(PORT, function(){
     console.log("The server is connected on https://localhost/"+PORT);
 });
