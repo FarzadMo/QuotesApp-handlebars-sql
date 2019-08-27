@@ -16,7 +16,7 @@ app.set("view engine", "handlebars");
 var connection = mysql.createConnection({
     port: 3306,
     host: "localhost",
-    password: "farzad1365",
+    password: "",
     database: "quotes_db",
     user: "root"
 });
@@ -75,6 +75,18 @@ app.get("/:id", function(req, res){
     });
 });
 
+//UPDATE THE QUOTE
+app.put("/api/quotes/:id", function(req, res){
+    connection.query("UPDATE quotes SET quote = ?, author = ? WHERE id = ?",[(req.body.quote),(req.body.author),(req.params.id)], function(err, result){
+        if(err) {
+            return res.status(500).end();
+        }
+        else if (result.changedRows===0){
+            return res.status(404).end();
+        }
+        res.status(200).end();
+    });
+});
 
 
 

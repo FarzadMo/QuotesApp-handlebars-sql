@@ -27,7 +27,24 @@ $(function(){
         });
     });
 
-    
+    $(".update-form").on("submit", function(event){
+
+        event.preventDefault();
+        updateData = {
+            quote: $("#quo").val().trim(),
+            author: $("#auth").val().trim()
+        }
+        var id = $(this).data("id");
+        // console.log(updateData.quote);
+        // console.log(updateData.author);
+        
+        $.ajax("/api/quotes/"+id, {
+            type: "PUT",
+            data: updateData
+        }).then(function(){
+            location.assign("/");
+        });
+    });
 
 
 
