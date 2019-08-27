@@ -62,7 +62,18 @@ app.post("/api/quotes", function(req, res){
     });
 });
 
-
+//GET ONE QUOTE FOR UPDATE PAGE
+app.get("/:id", function(req, res){
+    connection.query("SELECT * FROM quotes WHERE id = ?", [req.params.id], function(err, data){
+        if (err) {
+            return res.status(500).end();
+        }
+        //console.log(" id data[0] of Single Get" +data[0].id);
+        //console.log(" quote data[0] of Single Get" +data[0].quote);
+        //console.log(" author data[0] of Single Get " +data[0].author);
+        res.render("single-quote", data[0]);
+    });
+});
 
 
 
