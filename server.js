@@ -30,6 +30,7 @@ connection.connect(function(err){
 });
 
 //ROUTES
+//Main page:
 app.get("/", function(req, res){
     connection.query("SELECT * FROM quotes;", function(err, result){
         if(err){
@@ -39,6 +40,30 @@ app.get("/", function(req, res){
         res.render("index", {quotes: result});
     });
 });
+//DELETE QUOTES
+app.delete("/api/quotes/:id", function(req, res){
+    connection.query("DELETE FROM quotes WHERE id= ?",[req.params.id], function(err, result){
+        if(err){
+           return res.status(500).end();
+        } else if(result.affectedRows === 0){
+            return res.status(404).end();
+        }
+        res.status(200).end();
+    });
+});
+
+//CREATE QUOTES
+app.post("/api/quotes", function(req, res){
+    connection.query("INSERT INTO quotes (author, quote) VALUES (?, ?)", [(req.body.author), (req.body.quote)], function(err, result){
+        if (err) {
+            return res.status(500).end();
+        }
+        res.status(200).end();
+    });
+});
+
+
+
 
 
 
